@@ -14,7 +14,7 @@ class DynamoDBLockContext(object):
 
     .. code-block:: python
 
-        from dynamolock import DynamoDBLockContext as locker
+        from dynamolock import locker
 
         with locker(client=client, name="lock-to-get") as handle:
             pass # perform locked activity here
@@ -35,7 +35,7 @@ class DynamoDBLockContext(object):
         the specified lock.  When the lock has been acquired,
         this will return.
         '''
-        self.lock = self.client.acquire_lock(name)
+        self.lock = self.client.acquire_lock(self.name)
         return self
 
     def __exit__(self, ex_type, value, traceback):
