@@ -382,7 +382,7 @@ class DynamoDBLockClient(object):
         try:
             table = Table(self.schema.table_name)
             _logger.debug("current table description:\n%s", table.describe())
-        except JSONResponseError, ex:
+        except JSONResponseError as ex:
             _logger.exception("table %s does not exist, creating it", self.schema.table_name)
             table = Table.create(self.schema.table_name,
                 schema = [ HashKey(self.schema.name, data_type=STRING) ],
@@ -410,7 +410,7 @@ class DynamoDBLockClient(object):
             params = self.schema.to_dict(record)
             params['timestamp'] = self.policy.get_new_timestamp()
             return DynamoDBLock(**params)
-        except ItemNotFound, ex:
+        except ItemNotFound as ex:
             _logger.exception("failed to retrieve item: %s", name)
         return None
 
@@ -433,7 +433,7 @@ class DynamoDBLockClient(object):
 
         try:
             return self.table.delete_item(expected=expected, **params)
-        except ConditionalCheckFailedException, ex:
+        except ConditionalCheckFailedException as ex:
             _logger.exception("failed to delete item: %s", name)
         return False
 
