@@ -1,8 +1,13 @@
 import time
 import uuid
 import socket
+import sys
 import json
 from datetime import timedelta
+
+# http://python3porting.com/differences.html
+if sys.version_info > (3,):
+    long = int
 
 #--------------------------------------------------------------------------------
 # logging
